@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OI OI OI!!!</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+    .popup {
+      position: absolute;
+      background: red;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: 2px solid white;
+      font-size: 24px;
+      font-family: monospace;
+      z-index: 9999;
+      animation: shake 0.3s infinite;
+    }
+    #countdown {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: lime;
+      font-size: 28px;
+      font-family: monospace;
+      z-index: 10000;
+    }
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(5px, 5px); }
+      50% { transform: translate(-5px, -5px); }
+      75% { transform: translate(5px, -5px); }
+      100% { transform: translate(-5px, 5px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown">Self-destruct in: 10</div>
+  <audio id="oiSound" src="https://www.myinstants.com/media/sounds/oi.mp3" preload="auto"></audio>
+  <script>
+    const sound = document.getElementById('oiSound');
+    function spawnPopup() {
+      const popup = document.createElement('div');
+      popup.classList.add('popup');
+      popup.innerText = 'OI OI OI!!';
+      popup.style.top = Math.random() * window.innerHeight + 'px';
+      popup.style.left = Math.random() * window.innerWidth + 'px';
+      document.body.appendChild(popup);
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    setInterval(spawnPopup, 200);
+
+    let secondsLeft = 10;
+    const countdownEl = document.getElementById('countdown');
+    const countdown = setInterval(() => {
+      secondsLeft--;
+      countdownEl.innerText = 'Self-destruct in: ' + secondsLeft;
+      if (secondsLeft <= 0) {
+        countdownEl.innerText = '💥 SYSTEM FAILURE 💥';
+        clearInterval(countdown);
+      }
+    }, 1000);
+
+    // 防止使用者關閉視窗
+    window.onbeforeunload = function() {
+      return "Don't leave! OI hasn't finished yet!";
+    }
+  </script>
+</body>
+</html>
